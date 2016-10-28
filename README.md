@@ -159,7 +159,6 @@ You can also pass your own callback to take complete control over how the filter
 
 
 ### `labelKey`
-
 Allows you to control the contents of the selection.  If set to a string, will use that property of the selected option.  It can also be set to a function, with one argument (the selected option) and returning a string for rendering.
 ```jsx
 <Typeahead
@@ -169,6 +168,26 @@ Allows you to control the contents of the selection.  If set to a string, will u
   }}
 />
 ```
+
+### `renderMenu`
+Provides full control over how the menu is rendered. Use the `MenuItem` component provided with the module to ensure the proper behaviors. You will need to pass the data and menu position for each item.
+```jsx
+<Typeahead
+  options={options}
+  renderMenu={(results, menuProps) => (
+    return (
+      <Menu {...menuProps}>
+        {results.map((result, idx) => (
+          <MenuItem option={result} position={idx}>
+            {result.label}
+          </MenuItem>
+        ))}
+      </Menu>
+    );
+  )}
+/>
+```
+
 ### `renderMenuItemChildren`
 Allows you to control the contents of a menu item. Your function will be passed the `TypeaheadMenu` props, an individual option from your data list, and the index:
 ```jsx
@@ -256,8 +275,9 @@ paginate | boolean | `true` | Give user the ability to display additional result
 paginateResults | number | 100 | DEPRECATED. Use `maxResults` and `paginate` instead.
 paginationText | string | 'Display additional results...' | Prompt displayed when large data sets are paginated.
 placeholder | string | | Placeholder text for the input.
-renderMenuItemChildren | function | | Provides a hook for customized rendering of menu item contents.
-renderToken | function | | Provides a hook for customized rendering of tokens when multiple selections are enabled.
+renderMenu | function | | Callback for custom menu rendering.
+renderMenuItemChildren | function | | Callback for customized rendering of menu item contents.
+renderToken | function | | Callback for customized rendering of tokens when multiple selections are enabled.
 selected | array | `[]` | The selected option(s) displayed in the input. Use this prop if you want to control the component via its parent.
 
 ## CSS
